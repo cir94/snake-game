@@ -1,14 +1,14 @@
 'use strict'
 import { onSnake, expandSnake } from "./snake.js"
+import { randomGridPosition } from './grid.js'
 
-
-let food = { x: 10, y: 1 }
+let food = getRandomFoodPosition()
 const EXPANSION_RATE = 1
 
 export function update() {
     if (onSnake(food)) {
         expandSnake(EXPANSION_RATE)
-        food = { x: 20, y: 10 }
+        food = getRandomFoodPosition()
     }
 }
 
@@ -20,3 +20,10 @@ export function draw(gameBoard) {
         gameBoard.appendChild(foodElement)
 }
 
+function getRandomFoodPosition() {
+    let newFoodPosition
+    while (newFoodPosition == null || onSnake(newFoodPosition)) {
+        newFoodPosition = randomGridPosition()
+    }
+    return newFoodPosition
+}
